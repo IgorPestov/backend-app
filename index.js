@@ -14,9 +14,10 @@ mongoose
         console.log('Database is connected successfully');
     })
     .catch((err) => {
-
         console.log('Error with connecting to database');
     });
+
+mongoose.Promise = Promise;
 app.use(bodyParser.json())
 app.use('/user', router)
 app.listen(PORT, () => {

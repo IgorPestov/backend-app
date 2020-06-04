@@ -1,14 +1,19 @@
-const db = require("../Models/users")
+const userModel = require("../Models/users")
 
 
 
 exports.signUpUser = async (req,res, next) => {
-    User.insertOne( {  Email: 12312,Password:123123,
-    FirstName:123123 },(err, result) => {
+    const user = new userModel({Email:req.body.Email,Password:req.body.Password ,FirstName:req.body.FirstName })
+    const check = req.body.Email.trim() && req.body.Password.trim() && req.body.FirstName.trim()
+    if(!check) {
+       return  next({status: 400, massage: "Empty fields"})
+
+    }
+    user.save((err, user) => {
         if (err) {
-            console.log('Unable insert user: ', err)
-            throw err
+            console.log('err', err)
         }
+        console.log('saved user', user)
     })
     console.log('singUpUser')
 }
@@ -18,6 +23,7 @@ exports.signInUser = async (req,res, next) => {
 }
 
 exports.showUserInfo = async (req,res, next) => {
+
     console.log('showUserInfo')
 }
 
