@@ -4,6 +4,8 @@ const bodyParser = require("body-parser")
 const PORT = process.env.PORT || 3000
 const mongoose = require("mongoose")
 const router = require("./src/Routes/routes")
+
+
 require('dotenv').config();
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -16,11 +18,11 @@ mongoose
     .catch((err) => {
         console.log('Error with connecting to database');
     });
-
-mongoose.Promise = Promise;
 app.use(bodyParser.json())
+
+
+
 app.use('/user', router)
 app.listen(PORT, () => {
-
     console.log(`Listening on port ${PORT}`)
 })
