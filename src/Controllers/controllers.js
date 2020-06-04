@@ -3,6 +3,13 @@ const db = require("../Models/users")
 
 
 exports.signUpUser = async (req,res, next) => {
+    User.insertOne( {  Email: 12312,Password:123123,
+    FirstName:123123 },(err, result) => {
+        if (err) {
+            console.log('Unable insert user: ', err)
+            throw err
+        }
+    })
     console.log('singUpUser')
 }
 
