@@ -30,6 +30,7 @@ exports.signInUser = async (req, res, next) => {
     const isUserFind = await userModel.findOne({email, password})
     if (!isUserFind) {
         res.end('erro')
+        return false
     }
     res.end(`hello, ${isUserFind.firstName}`)
 }
