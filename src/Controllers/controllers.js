@@ -64,6 +64,9 @@ exports.updateUserInfo = async (req, res, next) => {
 }
 
 exports.showFile = async (req, res, next) => {
+    const {id} = req.params;
+    const fileInfo = await userModel.findOne({_id: id})
+    res.send(fileInfo.file)
     console.log('showFile')
 }
 
