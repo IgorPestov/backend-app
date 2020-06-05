@@ -1,6 +1,5 @@
 const userModel = require("../Models/users")
 
-
 exports.signUpUser = async (req, res, next) => {
     const {email, password, firstName} = req.body;
     const user = new userModel({
@@ -14,7 +13,8 @@ exports.signUpUser = async (req, res, next) => {
     }
     const isUserExist = await userModel.findOne({email})
     if (isUserExist) {
-        res.end("Email zanyat")
+        res.send("Email zanyat")
+        return false
     }
     user.save((err, user) => {
         if (err) {
@@ -34,6 +34,13 @@ exports.signInUser = async (req, res, next) => {
 }
 
 exports.showUserInfo = async (req, res, next) => {
+    const {id} = req.params
+     const user = await userModel.find({_id:id})
+    if(user) {
+        res.send(user)
+    } else {
+        res.send("User not find")
+    }
     console.log('showUserInfo')
 }
 
