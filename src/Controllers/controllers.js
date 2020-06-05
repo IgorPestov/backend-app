@@ -2,43 +2,38 @@ const userModel = require("../Models/users")
 
 
 exports.signUpUser = async (req, res, next) => {
-
-    try {
-        const {email, password, firstName} = req.body
-        const isUserExist = await userModel.findOne({email});
-        if (isUserExist) {
-            return false
-        }
-        const user = new userModel({
-            email,
-            password,
-            firstName
-        })
-        const check = email.trim() && password.trim() && firstName.trim()
-        if (!check) {
-            return false
-        }
-
-        user.save((err, user) => {
-            if (err) {
-                console.log('err', err)
-            }
-            console.log('saved user', user)
-        })
-        console.log('singUpUser')
-
-    } catch (err) {
-        next(err)
+    const {email, password, firstName} = req.body;
+    const user = new userModel({
+        email,
+        password,
+        firstName
+    })
+    const check = email.trim() && password.trim() && firstName.trim();
+    if (!check) {
+        return false
     }
-
+    const isUserExist = await userModel.findOne({email})
+    if (isUserExist) {
+        res.end("Email zanyat")
+    }
+    user.save((err, user) => {
+        if (err) {
+            console.log("err", err)
+        }
+    })
+    console.log('singUpUser')
 }
 
 exports.signInUser = async (req, res, next) => {
-    console.log('signInUser')
+    const {email, password} = req.body;
+    const isUserFind = await userModel.findOne({email, password})
+    if (!isUserFind) {
+       res.end('erro')
+    }
+    res.end(`hello, ${isUserFind.firstName}???`)
 }
 
 exports.showUserInfo = async (req, res, next) => {
-
     console.log('showUserInfo')
 }
 
