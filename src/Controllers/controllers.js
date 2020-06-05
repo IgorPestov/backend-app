@@ -35,9 +35,8 @@ exports.signInUser = async (req, res, next) => {
 }
 
 exports.showUserInfo = async (req, res, next) => {
-    const id = req.params.id
-    const details = {"_id": new ObjectID(id)}
-     const user = await userModel.find({details})
+    const {id} = req.params
+     const user = await userModel.find({_id:id})
     if(user) {
         res.send(user)
     } else {
