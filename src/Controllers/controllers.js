@@ -68,6 +68,13 @@ exports.showFile = async (req, res, next) => {
 }
 
 exports.putDownloadFile = async (req, res, next) => {
+    const {file} = req.body;
+    const {id} = req.params;
+    const user = await userModel.findOneAndUpdate(
+        {_id: id},
+        {$push:{file}},
+        {returnOriginal: false})
+    res.send(user)
     console.log('putDownloadFile')
 }
 
