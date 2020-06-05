@@ -11,11 +11,11 @@ router.get("/showUserInfo/:id", controllers.showUserInfo)
 //localhost:3000/updateUserInfo/1
 router.put("/updateUserInfo/:id", controllers.updateUserInfo)
 //localhost:3000/showFile/1
-router.get("/showFile/:id", controllers.showFile)
+router.get("/showFiles/:id", controllers.showFiles)
 //localhost:3000/uploadFile/1
-router.put("/downloadFile/:id", controllers.putDownloadFile)
+router.put("/uploadFile/:id", controllers.putUnloadFile)
 //localhost:3000/downloadFile/1
-router.get("/uploadFile/:id", controllers.getUnloadFile)
+router.get("/downloadFile/:id", controllers.getDownloadFile)
 
 module.exports = router;
 

@@ -30,8 +30,9 @@ exports.signInUser = async (req, res, next) => {
     const isUserFind = await userModel.findOne({email, password})
     if (!isUserFind) {
         res.end('erro')
+        return false
     }
-    res.end(`hello, ${isUserFind.firstName}???`)
+    res.end(`hello, ${isUserFind.firstName}`)
 }
 
 exports.showUserInfo = async (req, res, next) => {
@@ -63,24 +64,29 @@ exports.updateUserInfo = async (req, res, next) => {
     console.log('updateUserInfo')
 }
 
-exports.showFile = async (req, res, next) => {
+exports.showFiles = async (req, res, next) => {
     const {id} = req.params;
     const fileInfo = await userModel.findOne({_id: id})
-    res.send(fileInfo.file)
-    console.log('showFile')
+    res.send(fileInfo.files)
+    console.log(fileInfo.files)
+    console.log('showFiles')
 }
 
-exports.putDownloadFile = async (req, res, next) => {
-    const {file} = req.body;
+exports.putUnloadFile = async (req, res, next) => {
+    const {files} = req.body;
     const {id} = req.params;
     const user = await userModel.findOneAndUpdate(
         {_id: id},
-        {$push:{file}},
+        {$push:{files}},
         {returnOriginal: false})
     res.send(user)
-    console.log('putDownloadFile')
+    console.log('putUnloadFile')
 }
 
-exports.getUnloadFile = async (req, res, next) => {
-    console.log('getUnloadFile')
+exports.getDownloadFile = async (req, res, next) => {
+    // const {id} = req.params;
+    // const fileInfo = await userModel.findOne({_id: id})
+    // res.send(fileInfo.file)
+    res.send("work")
+    console.log('getDownloadFile')
 }
