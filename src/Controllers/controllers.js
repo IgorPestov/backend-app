@@ -20,6 +20,7 @@ exports.signUpUser = async (req, res, next) => {
         if (err) {
             console.log("err", err)
         }
+        res.send(user)
     })
     console.log('singUpUser')
 }
@@ -34,8 +35,8 @@ exports.signInUser = async (req, res, next) => {
 }
 
 exports.showUserInfo = async (req, res, next) => {
-    const {id} = req.params
-     const user = await userModel.find({_id:id})
+    const {id} = req.params;
+     const user = await userModel.findOne({_id:id})
     if(user) {
         res.send(user)
     } else {
@@ -45,6 +46,10 @@ exports.showUserInfo = async (req, res, next) => {
 }
 
 exports.updateUserInfo = async (req, res, next) => {
+    const {firstName, lastName, age, gender, aboutYourself, avatar} = req.body;
+    const {id} = req.params;
+    const user = await userModel.findOneAndUpdate({_id:id}, {firstName, lastName, age, gender,aboutYourself, avatar}, { returnOriginal: false})
+    res.send(user)
     console.log('updateUserInfo')
 }
 

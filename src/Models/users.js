@@ -9,8 +9,23 @@ const userShema = new mongoose.Schema ({
     },
     firstName: {
 
-    }
+    },
 
+    lastName: {
+
+    },
+    age: {
+
+    },
+    gender: {
+
+    },
+    avatar: {
+
+    },
+    aboutYourself: {
+
+    }
 })
 
 const userModel = mongoose.model("User",userShema)
