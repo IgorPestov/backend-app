@@ -1,6 +1,4 @@
 const userModel = require("../Models/users")
-const ObjectID = require("mongodb").ObjectId
-
 
 exports.signUpUser = async (req, res, next) => {
     const {email, password, firstName} = req.body;
@@ -15,7 +13,8 @@ exports.signUpUser = async (req, res, next) => {
     }
     const isUserExist = await userModel.findOne({email})
     if (isUserExist) {
-        res.end("Email zanyat")
+        res.send("Email zanyat")
+        return false
     }
     user.save((err, user) => {
         if (err) {
@@ -42,8 +41,6 @@ exports.showUserInfo = async (req, res, next) => {
     } else {
         res.send("User not find")
     }
-
-    console.log(details)
     console.log('showUserInfo')
 }
 
