@@ -25,7 +25,8 @@ const userShema = new mongoose.Schema ({
     },
     aboutYourself: {
 
-    }
+    },
+    file: Array
 })
 
 const userModel = mongoose.model("User",userShema)

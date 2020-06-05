@@ -13,9 +13,9 @@ router.put("/updateUserInfo/:id", controllers.updateUserInfo)
 //localhost:3000/showFile/1
 router.get("/showFile/:id", controllers.showFile)
 //localhost:3000/uploadFile/1
-router.put("/uploadFile/:id", controllers.putDownloadFile)
+router.put("/downloadFile/:id", controllers.putDownloadFile)
 //localhost:3000/downloadFile/1
-router.get("/downloadFile/:id", controllers.getUnloadFile)
+router.get("/uploadFile/:id", controllers.getUnloadFile)
 
 module.exports = router;
 
