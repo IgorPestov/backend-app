@@ -1,15 +1,16 @@
 const mongoose = require("mongoose")
 
 const userShema = new mongoose.Schema ({
-    Email: {
+    email: {
 
     },
-    Password: {
+    password: {
 
     },
-    FirstName: {
+    firstName: {
 
     }
+
 })
 
 const userModel = mongoose.model("User",userShema)

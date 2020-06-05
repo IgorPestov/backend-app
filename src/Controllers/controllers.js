@@ -1,38 +1,54 @@
-const db = require("../Models/users")
+const userModel = require("../Models/users")
 
 
-
-exports.signUpUser = async (req,res, next) => {
-    User.insertOne( {  Email: 12312,Password:123123,
-    FirstName:123123 },(err, result) => {
+exports.signUpUser = async (req, res, next) => {
+    const {email, password, firstName} = req.body;
+    const user = new userModel({
+        email,
+        password,
+        firstName
+    })
+    const check = email.trim() && password.trim() && firstName.trim();
+    if (!check) {
+        return false
+    }
+    const isUserExist = await userModel.findOne({email})
+    if (isUserExist) {
+        res.end("Email zanyat")
+    }
+    user.save((err, user) => {
         if (err) {
-            console.log('Unable insert user: ', err)
-            throw err
+            console.log("err", err)
         }
     })
     console.log('singUpUser')
 }
 
-exports.signInUser = async (req,res, next) => {
-    console.log('signInUser')
+exports.signInUser = async (req, res, next) => {
+    const {email, password} = req.body;
+    const isUserFind = await userModel.findOne({email, password})
+    if (!isUserFind) {
+       res.end('erro')
+    }
+    res.end(`hello, ${isUserFind.firstName}???`)
 }
 
-exports.showUserInfo = async (req,res, next) => {
+exports.showUserInfo = async (req, res, next) => {
     console.log('showUserInfo')
 }
 
-exports.updateUserInfo = async (req,res, next) => {
+exports.updateUserInfo = async (req, res, next) => {
     console.log('updateUserInfo')
 }
 
-exports.showFile = async (req,res, next) => {
+exports.showFile = async (req, res, next) => {
     console.log('showFile')
 }
 
-exports.putDownloadFile = async (req,res, next) => {
+exports.putDownloadFile = async (req, res, next) => {
     console.log('putDownloadFile')
 }
 
-exports.getUnloadFile = async (req,res, next) => {
+exports.getUnloadFile = async (req, res, next) => {
     console.log('getUnloadFile')
 }
