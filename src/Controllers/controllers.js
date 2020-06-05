@@ -29,15 +29,15 @@ exports.signInUser = async (req, res, next) => {
     const {email, password} = req.body;
     const isUserFind = await userModel.findOne({email, password})
     if (!isUserFind) {
-       res.end('erro')
+        res.end('erro')
     }
     res.end(`hello, ${isUserFind.firstName}???`)
 }
 
 exports.showUserInfo = async (req, res, next) => {
     const {id} = req.params;
-     const user = await userModel.findOne({_id:id})
-    if(user) {
+    const user = await userModel.findOne({_id: id})
+    if (user) {
         res.send(user)
     } else {
         res.send("User not find")
@@ -48,7 +48,17 @@ exports.showUserInfo = async (req, res, next) => {
 exports.updateUserInfo = async (req, res, next) => {
     const {firstName, lastName, age, gender, aboutYourself, avatar} = req.body;
     const {id} = req.params;
-    const user = await userModel.findOneAndUpdate({_id:id}, {firstName, lastName, age, gender,aboutYourself, avatar}, { returnOriginal: false})
+    const user = await userModel.findOneAndUpdate(
+        {_id: id},
+        {
+            firstName,
+            lastName,
+            age,
+            gender,
+            aboutYourself,
+            avatar
+        },
+        {returnOriginal: false})
     res.send(user)
     console.log('updateUserInfo')
 }
