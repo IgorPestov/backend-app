@@ -4,7 +4,8 @@ const bodyParser = require("body-parser")
 const PORT = process.env.PORT || 3000
 const mongoose = require("mongoose")
 const router = require("./src/Routes/routes")
-
+const cors = require("cors")
+app.use(cors())
 
 require('dotenv').config();
 
@@ -19,10 +20,8 @@ mongoose
         console.log('Error with connecting to database');
     });
 app.use(bodyParser.json())
-
-
-
 app.use('/user', router)
+
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
 })
