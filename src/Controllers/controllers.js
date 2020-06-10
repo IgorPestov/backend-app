@@ -8,17 +8,10 @@ exports.signUpUser = async (req, res, next) => {
     firstName,
   });
 
-  const check = email.trim() && password.trim() && firstName.trim();
-  if (!check) {
-    return res.status(400).json({
-      message: "repeat entry",
-    });
-  }
-
   const isUserExist = await userModel.findOne({ email });
   if (isUserExist) {
     return res.status(400).json({
-      message: "E-mail busy",
+      message: "E-mail already exist",
     });
   }
   user.save((err, user) => {
@@ -48,7 +41,7 @@ exports.showUserInfo = async (req, res, next) => {
     res.send(user);
   } else {
     return res.status(404).json({
-      message: "User not find",
+      message: "User not found",
     });
   }
   console.log("showUserInfo");
@@ -69,11 +62,6 @@ exports.updateUserInfo = async (req, res, next) => {
     },
     { returnOriginal: false }
   );
-  if (!firstName.trim()) {
-    return res.status(400).json({
-      message: "First name cannot be empty",
-    });
-  }
   res.send(user);
   console.log("updateUserInfo");
 };
@@ -84,7 +72,7 @@ exports.showFiles = async (req, res, next) => {
   res.send(fileInfo.files);
   if (filesInfo) {
     return res.status(404).json({
-      message: "Not find",
+      message: "Not found",
     });
   }
   console.log("showFiles");
@@ -100,7 +88,7 @@ exports.putUnloadFile = async (req, res, next) => {
   );
   if (!user) {
     return res.status(404).json({
-      message: "Not find",
+      message: "Not found",
     });
   }
   res.send(user);
