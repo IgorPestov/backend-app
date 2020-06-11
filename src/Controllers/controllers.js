@@ -1,6 +1,7 @@
 const userModel = require("../Models/users");
 
 exports.signUpUser = async (req, res, next) => {
+  console.log("singUpUser");
   const { email, password, firstName } = req.body;
   const user = new userModel({
     email,
@@ -30,8 +31,8 @@ exports.signInUser = async (req, res, next) => {
     return res.status(400).json({
       message: "Invalid e-mail or password",
     });
-  }
-  res.end(isUserFind);
+  }  
+  res.send(isUserFind);
 };
 
 exports.showUserInfo = async (req, res, next) => {
