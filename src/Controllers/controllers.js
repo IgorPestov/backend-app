@@ -1,4 +1,5 @@
 const userModel = require("../Models/users");
+const jwt = require("jsonwebtoken");
 
 exports.signUpUser = async (req, res, next) => {
   console.log("singUpUser");
@@ -19,7 +20,7 @@ exports.signUpUser = async (req, res, next) => {
     if (err) {
       console.log("err", err);
     }
-    res.send(user);
+    res.status(user);
   });
   console.log("singUpUser");
 };
@@ -31,8 +32,20 @@ exports.signInUser = async (req, res, next) => {
     return res.status(400).json({
       message: "Invalid e-mail or password",
     });
-  }  
-  res.send(isUserFind);
+  }
+  console.log(isUserFind);
+  const { _id } = isUserFind;
+  const token = jwt.sign(
+    {
+      email,
+      _id
+    },
+    process.env.jwt,
+    { expiresIn: 60 * 60 }
+  );
+  res.status(200).json({
+    token: `Bearer ${token}`,
+  });
 };
 
 exports.showUserInfo = async (req, res, next) => {
