@@ -1,12 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const controllers = require("../Controllers/controllers");
+const auth = require('../Controllers/auth')
 const authMiddleware = require("../middleware/auth");
 
-//localhost:3000/user/signUp
-router.post("/signUp", controllers.signUpUser)
-//localhost:3000/user/signIn
-router.post("/signIn", controllers.signInUser)
+
 //localhost:3000/user/showUserInfo/1
 router.get("/showUserInfo/:id", authMiddleware, controllers.showUserInfo)
 //localhost:3000/updateUserInfo/1
@@ -19,8 +17,12 @@ router.put("/uploadFile/:id", controllers.putUnloadFile)
 router.get("/downloadFile/:id", controllers.getDownloadFile)
 
 
-router.post('/refresh-tokens', controllers.refreshTokens)
-router.get('/showUsers', controllers.getAll)
+//localhost:3000/user/signUp
+router.post("/signUp", auth.signUpUser)
+//localhost:3000/user/signIn
+router.post("/signIn", auth.signInUser)
+//localhost:3000/user/refresh-tokens
+router.post('/refresh-tokens', auth.refreshTokens)
 
 module.exports = router;
 
