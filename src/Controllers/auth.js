@@ -73,6 +73,6 @@ exports.signInUser = async (req, res, next) => {
       message: "Invalid e-mail or password",
     });
   }
-  console.log(isUserFind._id);
+  console.log(isUserFind);
   updateTokens(isUserFind._id).then((token) => res.json(token));
 };
