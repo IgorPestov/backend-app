@@ -7,7 +7,7 @@ const { secret } = require("../config/configToken").jwt;
 const updateTokens = (userId) => {
   const accessToken = authHelper.generateAccessToken(userId);
   const refreshToken = authHelper.generateRefreshToken();
-  return authHelper.replaceDbRefreshToken(refreshToken.id, userId).then(() => ({
+  return authHelper.replaceDbRefreshToken(refreshToken.id, userId).then(() =>  ({
     accessToken,
     refreshToken: refreshToken.token,
   }));
