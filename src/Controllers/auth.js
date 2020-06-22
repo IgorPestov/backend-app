@@ -7,7 +7,7 @@ const { secret } = require("../config/configToken").jwt;
 const updateTokens = (userId) => {
   const accessToken = authHelper.generateAccessToken(userId);
   const refreshToken = authHelper.generateRefreshToken();
-  return authHelper.replaceDbRefreshToken(refreshToken.id, userId).then(() =>  ({
+  return authHelper.replaceDbRefreshToken(refreshToken.id, userId).then(() => ({
     accessToken,
     refreshToken: refreshToken.token,
   }));
@@ -61,7 +61,7 @@ exports.signUpUser = async (req, res, next) => {
       console.log("err", err);
     }
 
-    updateTokens(isUserFind._id).then((token) => res.json(token));
+    updateTokens(user._id).then((token) => res.json(token));
   });
 };
 
@@ -73,6 +73,5 @@ exports.signInUser = async (req, res, next) => {
       message: "Invalid e-mail or password",
     });
   }
-  console.log(isUserFind);
   updateTokens(isUserFind._id).then((token) => res.json(token));
 };
