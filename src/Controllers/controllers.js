@@ -44,7 +44,8 @@ exports.showFiles = async (req, res, next) => {
   console.log("showFiles");
 };
 
-exports.putUnloadFile = async (req, res, next) => {
+exports.postUnloadFile = async (req, res, next) => {
+  
   const { files } = req.body;
   const { id } = req.params;
   const user = await userModel.findOneAndUpdate(
@@ -58,7 +59,7 @@ exports.putUnloadFile = async (req, res, next) => {
     });
   }
   res.send(user);
-  console.log("putUnloadFile");
+  console.log(user);
 };
 
 exports.getDownloadFile = async (req, res, next) => {
