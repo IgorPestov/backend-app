@@ -43,14 +43,36 @@ exports.showFiles = async (req, res, next) => {
   }
   console.log("showFiles");
 };
+exports.postUserAvatar = async (req, res, next) => {
+  if (req.files === null) {
+    return res.status(400).json({ msg: "No avatar uploaded" });
+  }
+  const file = req.files.file;
+  console.log(req)
+  const { id } = req.params;
+  const user = await userModel.findOneAndUpdate({ _id: id }, { avatar: req.body.url });
+  if (!user) {
+    return res.status(400).json({ msg: "Not found" });
+  }
+  file.mv(`/home/user/Desktop/backend/backend/public/files/${file.name}`),
+    (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send(err);
+      }
+      res.json({ fileName: file.name, filePath: `/home/user/Desktop/backend/backend/public/files/${file.name}` });
+    };
+};
 
 exports.postUnloadFile = async (req, res, next) => {
-  
-  const { files } = req.body;
+  if (req.files === null) {
+    return res.status(400).json({ msg: "No file uploaded" });
+  }
+  const file = req.files.file;
   const { id } = req.params;
   const user = await userModel.findOneAndUpdate(
     { _id: id },
-    { $push: { files } },
+    { $push: { files: file } },
     { returnOriginal: false }
   );
   if (!user) {
@@ -58,8 +80,17 @@ exports.postUnloadFile = async (req, res, next) => {
       message: "Not found",
     });
   }
-  res.send(user);
-  console.log(user);
+  file.mv(
+    `/home/user/Desktop/backend/backend/public/files/${file.name}`,
+    (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send(err);
+      }
+
+      res.json({ fileName: file.name, filePath: `/files/${file.name}` });
+    }
+  );
 };
 
 exports.getDownloadFile = async (req, res, next) => {
