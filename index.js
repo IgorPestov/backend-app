@@ -7,7 +7,27 @@ const router = require("./src/Routes/routes")
 const cors = require("cors")
 const fileUpload = require('express-fileupload');
 
+const dropboxV2Api = require('dropbox-v2-api');
 
+const dropbox = dropboxV2Api.authenticate({
+	token: 'oXHBknHRYiAAAAAAAAAAEEMkNZmLVkldMsll6K2DNp6ntH-D_4XRUutat2jBAs5S'
+});
+console.log('----------------------------------');
+
+const downloadStream = dropbox({
+    resource: 'files/download',
+    parameters: { path: '/source/file/path' }				
+});
+ 
+const uploadStream = dropbox({
+    resource: 'files/upload',
+    parameters: { path: '/home/user/Desktop/backend/backend/src/dropbox/dropbox.js' }				
+}, (err, result, response) => {
+    console.log('asdasdasdasdasdasd', response)
+    //upload finished
+});
+ 
+downloadStream.pipe(uploadStream);
 
 app.use(cors())
 app.use(fileUpload());

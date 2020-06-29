@@ -1,4 +1,5 @@
 const userModel = require("../Models/users");
+// const dropbox = require('../dropbox/dropbox')
 
 exports.showUserInfo = async (req, res, next) => {
   const { id } = req.params;
@@ -44,30 +45,19 @@ exports.showFiles = async (req, res, next) => {
   console.log("showFiles");
 };
 exports.postUserAvatar = async (req, res, next) => {
-  if (req.files === null) {
-    return res.status(400).json({ msg: "No avatar uploaded" });
-  }
-  const file = req.files.file;
-  console.log(req)
+ 
+  const file = req.body.file;
+  console.log('-------------------------------file',file)
   const { id } = req.params;
-  const user = await userModel.findOneAndUpdate({ _id: id }, { avatar: req.body.url });
+  const user = await userModel.findOneAndUpdate({ _id: id }, { avatar: file },{new: true});
   if (!user) {
     return res.status(400).json({ msg: "Not found" });
   }
-  file.mv(`/home/user/Desktop/backend/backend/public/files/${file.name}`),
-    (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send(err);
-      }
-      res.json({ fileName: file.name, filePath: `/home/user/Desktop/backend/backend/public/files/${file.name}` });
-    };
+
 };
 
 exports.postUnloadFile = async (req, res, next) => {
-  if (req.files === null) {
-    return res.status(400).json({ msg: "No file uploaded" });
-  }
+
   const file = req.files.file;
   const { id } = req.params;
   const user = await userModel.findOneAndUpdate(
