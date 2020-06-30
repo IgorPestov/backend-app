@@ -35,7 +35,8 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "rand-token": "^1.0.1",
-    "req-flash": "0.0.3"
+    "req-flash": "0.0.3",
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
