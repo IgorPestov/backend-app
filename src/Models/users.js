@@ -20,9 +20,7 @@ const userShema = new mongoose.Schema ({
     gender: {
 
     },
-    avatar: {
-        type: String
-    },
+    avatar: Object,
     aboutYourself: {
 
     },
