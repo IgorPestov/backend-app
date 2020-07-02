@@ -17,7 +17,6 @@ router.get("/downloadFile/:id", controllers.getDownloadFile)
 //localhost:3000/updateUserInfo/1
 router.post("/updateUserInfo/:id", controllers.postUserAvatar)
 //localhost:3000/updateUserInfo/1
-router.post("/updateUserAvatar/:id", controllers.loadAvatar)
 
 
 //localhost:3000/user/signUp

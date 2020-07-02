@@ -10,7 +10,7 @@ const fs = require("fs");
 const dropboxV2Api = require("dropbox-v2-api");
 const userModel = require("./src/Models/users");
 const dropbox = dropboxV2Api.authenticate({
-  token: "oXHBknHRYiAAAAAAAAAAS3ZTmPNTIvoYZxNUk7tQNWOTEvo5KmNHzuGimKzUViLP",
+  token: "oXHBknHRYiAAAAAAAAAAt7_tymRG67F5tIEuQdka-hwghFmIRXgygPRLjkbPnIw0",
 });
 console.log("----------------------------------");
 
@@ -33,34 +33,7 @@ exports.uploadAvatar = (name, id) => {
     `/home/user/Desktop/backend/backend/upload/avatar_${id}/${name}`
   ).pipe(uploadStream);
 };
-exports.saveAvatar = (name, id) => {
-  dropbox(
-    {
-      resource: "deprecated/create_shared_link",
-      parameters: {
-        path: `/user_${id}/avatar/${name}`,
-        short_url: false,
-      },
-    },
-    (err, result, response) => {
-      const url = result.url.slice(0, -4) + "raw=1";
-      const path = result.path;
 
-      const userAvatar = async () => {
-        const user = await userModel.findOneAndUpdate(
-          { _id: id },
-          { avatar: { url, path } },
-          { new: true }
-        );
-        console.log("AVATAR", user.avatar)
-        if (!user) {
-          return res.status(400).json({ msg: "Not found" });
-        }
-      };
-      userAvatar();
-    }
-  );
-};
 exports.uploadFile = (name, id) => {
   const uploadStream = dropbox(
     {
