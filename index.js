@@ -10,7 +10,7 @@ const fs = require("fs");
 const dropboxV2Api = require("dropbox-v2-api");
 const userModel = require("./src/Models/users");
 const dropbox = dropboxV2Api.authenticate({
-  token: "oXHBknHRYiAAAAAAAAAAt7_tymRG67F5tIEuQdka-hwghFmIRXgygPRLjkbPnIw0",
+  token: "oXHBknHRYiAAAAAAAAAA8GjfN9XxsawVS40zg77LN5MbpqFzapmU_20q5D1q0Ojv",
 });
 console.log("----------------------------------");
 
