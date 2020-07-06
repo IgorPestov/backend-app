@@ -10,49 +10,49 @@ const fs = require("fs");
 const dropboxV2Api = require("dropbox-v2-api");
 const userModel = require("./src/Models/users");
 const dropbox = dropboxV2Api.authenticate({
-  token: "oXHBknHRYiAAAAAAAAAA8GjfN9XxsawVS40zg77LN5MbpqFzapmU_20q5D1q0Ojv",
+  token: "oXHBknHRYiAAAAAAAAABEZykSc9S8qRTMoYF9kLEjiTvugqf26QxfdrBv4PQ9wnZ",
 });
 console.log("----------------------------------");
 
-exports.uploadAvatar = (name, id) => {
-  const uploadStream = dropbox(
-    {
-      resource: "files/upload",
-      parameters: { path: `/user_${id}/avatar/${name}` },
-      mode: "add",
-      autorename: true,
-      mute: false,
-      strict_conflict: false,
-      symlink_info: true,
-    },
-    (err, result, response) => {
-      fs.rmdirSync(`./upload/avatar_${id}`, { recursive: true });
-    }
-  );
-  fs.createReadStream(
-    `/home/user/Desktop/backend/backend/upload/avatar_${id}/${name}`
-  ).pipe(uploadStream);
-};
+// exports.uploadAvatar = (name, id) => {
+//   const uploadStream = dropbox(
+//     {
+//       resource: "files/upload",
+//       parameters: { path: `/user_${id}/avatar/${name}` },
+//       mode: "add",
+//       autorename: true,
+//       mute: false,
+//       strict_conflict: false,
+//       symlink_info: true,
+//     },
+//     (err, result, response) => {
+//       fs.rmdirSync(`./upload/avatar_${id}`, { recursive: true });
+//     }
+//   );
+//   fs.createReadStream(
+//     `/home/user/Desktop/backend/backend/upload/avatar_${id}/${name}`
+//   ).pipe(uploadStream)
+// };
 
-exports.uploadFile = (name, id) => {
-  const uploadStream = dropbox(
-    {
-      resource: "files/upload",
-      parameters: { path: `/user_${id}/${name}` },
-      mode: "add",
-      autorename: true,
-      mute: false,
-      strict_conflict: false,
-      symlink_info: true,
-    },
-    (err, result, response) => {
-      fs.rmdirSync(`./upload/user_${id}`, { recursive: true });
-    }
-  );
-  fs.createReadStream(
-    `/home/user/Desktop/backend/backend/upload/user_${id}/${name}`
-  ).pipe(uploadStream);
-};
+// exports.uploadFile = (name, id) => {
+//   const uploadStream = dropbox(
+//     {
+//       resource: "files/upload",
+//       parameters: { path: `/user_${id}/${name}` },
+//       mode: "add",
+//       autorename: true,
+//       mute: false,
+//       strict_conflict: false,
+//       symlink_info: true,
+//     },
+//     (err, result, response) => {
+//       fs.rmdirSync(`./upload/user_${id}`, { recursive: true });
+//     }
+//   );
+//   fs.createReadStream(
+//     `/home/user/Desktop/backend/backend/upload/user_${id}/${name}`
+//   ).pipe(uploadStream);
+// };
 
 // downloadStream.pipe(uploadStream);
 

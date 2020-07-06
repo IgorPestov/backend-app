@@ -10,11 +10,12 @@ const userShema = new mongoose.Schema({
   avatar: Object,
   aboutYourself: String,
   files:
-    [{
+    [{  
         name: String,
         size: String,
         type: {type : String},
-        filePath: String
+        filePath: String,
+        url: String
     }]
 });
 
