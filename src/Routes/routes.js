@@ -13,7 +13,7 @@ router.get("/showFiles/:id", controllers.showFiles)
 //localhost:3000/uploadFile/1
 router.post("/uploadFile/:id", controllers.postUnloadFile)
 //localhost:3000/downloadFile/1
-router.post("/downloadFile/:id", controllers.getDownloadFile)
+router.post("/deleteFile/:id", controllers.deleteFile)
 //localhost:3000/updateUserInfo/1
 router.post("/postUserAvatar/:id", controllers.postUserAvatar)
 //localhost:3000/updateUserInfo/1

@@ -13,9 +13,10 @@ const userShema = new mongoose.Schema({
     [{  
         name: String,
         size: String,
-        type: {type : String},
+        mimetype: String,
         filePath: String,
-        url: String
+        url: String,
+        urlImg: String,
     }]
 });
 

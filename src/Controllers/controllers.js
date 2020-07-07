@@ -4,7 +4,7 @@ const fs = require("fs");
 const dropboxV2Api = require("dropbox-v2-api");
 
 const dropbox = dropboxV2Api.authenticate({
-  token: "oXHBknHRYiAAAAAAAAABEZykSc9S8qRTMoYF9kLEjiTvugqf26QxfdrBv4PQ9wnZ",
+  token: "oXHBknHRYiAAAAAAAAAB7lmT8-m1qj92g3kgtNVrNX-1EIbKDA6uMEBlDRFFHQzI",
 });
 
 exports.showUserInfo = async (req, res, next) => {
@@ -109,6 +109,8 @@ exports.postUnloadFile = async (req, res, next) => {
       $push: {
         files: {
           name,
+          size,
+          mimetype,
           filePath: `/user_${id}/${file.name}`,
         },
       },
@@ -155,43 +157,39 @@ exports.postUnloadFile = async (req, res, next) => {
           },
         },
         async (err, result, response) => {
-          const idUser = user.files.length - 1;
-          const idFile = String(user.files[idUser]._id)
-          console.log("==============================", typeof idFile );
-          console.log("+++++++++++++++++++++++++++", user.files);
-          console.log(req.params);
           const url = result.url.slice(0, -1) + "1";
-          const userFile = await userModel.findByIdAndUpdate(
-            { _id: id, _id:idFile  },
-            { $push: { "files.url": url } },
-            { "upsert": true, "new": true }
-           
-          );
-          console.log("000000000000000000000000", userFile);
+          const urlImg = result.url.slice(0, -4) + "raw=1";
+          const user = await userModel.findOneAndUpdate(
+            {"files.name" : name}, {"$set" : {"files.$.url" : url ,"files.$.urlImg" : urlImg}},
+            {returnOriginal: false}
 
-          res.send(userFile);
+          );
+          console.log('-=====f=sfsd=fd=fs', user.files)
+           res.send(user)
         }
       );
     }
   );
 };
 
-exports.getDownloadFile = async (req, res, next) => {
+exports.deleteFile = async (req, res, next) => {
   const { id } = req.params;
-  const { filePath } = req.body;
-  dropbox(
+  const { path, idFile } = req.body;
+
+  await dropbox(
     {
-      resource: "deprecated/create_shared_link",
+      resource: "files/delete",
       parameters: {
-        path: `${filePath}`,
-        short_url: false,
+        path: `${path}`,
       },
     },
     async (err, result, response) => {
-      console.log("=====================", result);
-      const userFile = await userModel.findOneAndUpdate({ _id: id });
-      console.log("UUUUUUUUUUUUSEEEEEEEEER", userFile);
-      // res.send(user)
+      const user = await userModel.findByIdAndUpdate(
+        { _id: id },
+        { $pull: { files: { _id: idFile } } },
+        { returnOriginal: false }
+      );
+      res.send(user);
     }
   );
 };
@@ -220,6 +218,5 @@ exports.updateUserInfo = async (req, res, next) => {
     },
     { returnOriginal: false }
   );
-  console.log("UPDATE");
   res.send(user);
 };
