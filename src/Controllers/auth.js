@@ -2,7 +2,12 @@ const jwt = require("jsonwebtoken");
 const userModel = require("../Models/users");
 const authHelper = require("../helpers/authHelper");
 const TokenModel = require("../Models/token");
+require("dotenv").config();
 const { secret } = require("../config/configToken").jwt;
+const mailgun = require("mailgun-js");
+const DOMAIN = 'sandboxc82b49ab804749708b8431385f806b59.mailgun.org';
+const mg = mailgun({apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN});
+
 
 const updateTokens = (userId) => {
   const accessToken = authHelper.generateAccessToken(userId);
@@ -18,7 +23,7 @@ exports.refreshTokens = (req, res) => {
   try {
     payload = jwt.verify(refreshToken, secret);
     if (payload.type !== "refresh") {
-      res.status(400).json({ message: "Invalid token! 1" });
+      res.status(400).json({ message: "Invalid token!" });
       return;
     }
   } catch (e) {
@@ -26,7 +31,7 @@ exports.refreshTokens = (req, res) => {
       res.status(400).json({ message: "Token expired!" });
       return;
     } else if (e instanceof jwt.JsonWebTokenError) {
-      res.status(400).json({ message: "Invalid token! 2" });
+      res.status(400).json({ message: "Invalid token!" });
       return;
     }
   }
@@ -49,13 +54,14 @@ exports.signUpUser = async (req, res, next) => {
     password,
     firstName,
   });
-
+ 
   const isUserExist = await userModel.findOne({ email });
   if (isUserExist) {
     return res.status(400).json({
       message: "E-mail already exist",
     });
   }
+
   user.save((err, user) => {
     if (err) {
       console.log("err", err);
@@ -75,3 +81,16 @@ exports.signInUser = async (req, res, next) => {
   }
   updateTokens(isUserFind._id).then((token) => res.json(token));
 };
+exports.forgotPassword = async (req, res, next) => {
+  const{email} =req.body 
+  const isUserFind = await userModel.findOne({email});
+  const data = {
+    from: 'noreply@hello.com',
+    to: email,
+    subject: 'Hello',
+    text: 'Testing some Mailgun awesomness!'
+  };
+  mg.messages().send(data, function (error, body) {
+    console.log(body);
+  });
+}
