@@ -16,7 +16,6 @@ router.post("/uploadFile/:id", controllers.postUnloadFile)
 router.post("/deleteFile/:id", controllers.deleteFile)
 //localhost:3000/updateUserInfo/1
 router.post("/postUserAvatar/:id", controllers.postUserAvatar)
-//localhost:3000/updateUserInfo/1
 
 
 //localhost:3000/user/signUp
@@ -25,6 +24,8 @@ router.post("/signUp", auth.signUpUser)
 router.post("/signIn", auth.signInUser)
 //localhost:3000/user/refresh-tokens
 router.post('/refresh-tokens', auth.refreshTokens)
+//localhost:3000/forgotPassword/
+router.post("/forgotPassword" , auth.forgotPassword)
 
 module.exports = router;
 

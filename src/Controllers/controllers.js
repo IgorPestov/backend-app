@@ -1,10 +1,8 @@
 const userModel = require("../Models/users");
-const index = require("../../index");
 const fs = require("fs");
 const dropboxV2Api = require("dropbox-v2-api");
-
 const dropbox = dropboxV2Api.authenticate({
-  token: "oXHBknHRYiAAAAAAAAAB7lmT8-m1qj92g3kgtNVrNX-1EIbKDA6uMEBlDRFFHQzI",
+  token: "oXHBknHRYiAAAAAAAAACmX2D2YYsTPbcfzUleCtho5xNj9Qwr38iChQCT6M8M6ng",
 });
 
 exports.showUserInfo = async (req, res, next) => {
@@ -130,7 +128,7 @@ exports.postUnloadFile = async (req, res, next) => {
       if (err) {
         console.error(err);
         return res.status(500).send(err);
-      }
+      } 
     }
   );
   await dropbox(
@@ -160,12 +158,11 @@ exports.postUnloadFile = async (req, res, next) => {
           const url = result.url.slice(0, -1) + "1";
           const urlImg = result.url.slice(0, -4) + "raw=1";
           const user = await userModel.findOneAndUpdate(
-            {"files.name" : name}, {"$set" : {"files.$.url" : url ,"files.$.urlImg" : urlImg}},
-            {returnOriginal: false}
-
+            { "files.name": name },
+            { $set: { "files.$.url": url, "files.$.urlImg": urlImg } },
+            { returnOriginal: false }
           );
-          console.log('-=====f=sfsd=fd=fs', user.files)
-           res.send(user)
+          res.send(user);
         }
       );
     }
