@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const TokenSchema = new mongoose.Schema({
   tokenId: {},
-  userId: {}
+  userId: {},
+  resetPassword: {}
 });
 
 const TokenModel = mongoose.model("Token", TokenSchema);

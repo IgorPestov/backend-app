@@ -17,7 +17,8 @@ const userShema = new mongoose.Schema({
         filePath: String,
         url: String,
         urlImg: String,
-    }]
+    }],
+    
 });
 
 const userModel = mongoose.model("User", userShema);

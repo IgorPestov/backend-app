@@ -25,7 +25,7 @@ router.post("/signIn", auth.signInUser)
 //localhost:3000/user/refresh-tokens
 router.post('/refresh-tokens', auth.refreshTokens)
 //localhost:3000/forgotPassword/
-router.post("/forgotPassword" , auth.forgotPassword)
+router.post("/resetPassword" , auth.forgotPassword)
 
 module.exports = router;
 

@@ -2,8 +2,14 @@ const userModel = require("../Models/users");
 const fs = require("fs");
 const dropboxV2Api = require("dropbox-v2-api");
 const dropbox = dropboxV2Api.authenticate({
-  token: "oXHBknHRYiAAAAAAAAACmX2D2YYsTPbcfzUleCtho5xNj9Qwr38iChQCT6M8M6ng",
+  token: "oXHBknHRYiAAAAAAAAACrjsSitf2RRDyZEAnFoOcKKqH8hl4lkR4AZERw7GUZHnf",
 });
+
+// const dropbox = dropboxV2Api.authenticate({
+//   client_id: 'kfh5k7mo7knom01',
+//   client_secret: 'ni20161dzsafndd',
+//   redirect_uri: 'http://localhost:3001/'
+// });
 
 exports.showUserInfo = async (req, res, next) => {
   const { id } = req.params;
