@@ -1,4 +1,5 @@
 const fs = require("fs");
+const userModel = require("../Models/users");
 const dropboxV2Api = require("dropbox-v2-api");
 require("dotenv").config();
 
@@ -79,12 +80,14 @@ exports.postUnloadFile = async (req, res, next) => {
         async (err, result, response) => {
           const url = result.url.slice(0, -1) + "1";
           const urlImg = result.url.slice(0, -4) + "raw=1";
-          const user = await userModel.findOneAndUpdate(
-            { "files.name": name },
+          const updateUser = await userModel.findOneAndUpdate(
+            { _id: id, "files.name": name },
             { $set: { "files.$.url": url, "files.$.urlImg": urlImg } },
             { returnOriginal: false }
           );
-          res.send(user);
+
+            console.log('==================',updateUser)
+            res.send(updateUser);
         }
       );
     }

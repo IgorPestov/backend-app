@@ -30,7 +30,7 @@ const generateResetPassword = () => {
   const options = { expiresIn: tokens.resetPassword.expiresIn };
   return jwt.sign(payload, secretReset, options);
 };
-const replaceDbRefreshToken = (tokenId, userId) =>
+const replaceDbRefreshToken = (tokenId, userId) => 
   TokenModel.findOneAndRemove({ userId })
     .exec()
     .then(() => TokenModel.create({ tokenId, userId }));
