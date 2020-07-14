@@ -24,20 +24,9 @@ mongoose
     console.log("Error with connecting to database");
   });
 app.use(bodyParser.json());
-app.set('view engine', 'jade')
+app.set("view engine", "jade");
 app.use("/user", router);
-// app.use("/", router,function (req, res) {
-//   //render the index.jade file - input forms for humans
-//   res.render("index", function (err, html) {
-//     if (err) {
-//       // log any error to the console for debug
-//       console.log(err);
-//     } else {
-//       //no error, so send the html to the browser
-//       res.send(html);
-//     }
-//   });
-// });
+
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });

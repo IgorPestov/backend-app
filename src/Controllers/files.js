@@ -10,7 +10,6 @@ exports.showFiles = async (req, res, next) => {
   const { id } = req.params;
   const filesInfo = await userModel.findOne({ _id: id });
 
-  console.log(filesInfo);
   if (!filesInfo) {
     return res.status(404).json({
       message: "Not found",
@@ -86,8 +85,7 @@ exports.postUnloadFile = async (req, res, next) => {
             { returnOriginal: false }
           );
 
-            console.log('==================',updateUser)
-            res.send(updateUser);
+          res.send(updateUser);
         }
       );
     }
