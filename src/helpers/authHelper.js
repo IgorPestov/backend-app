@@ -14,13 +14,21 @@ const generateAccessToken = (userId) => {
 const generateRefreshToken = () => {
   const payload = {
     id: randtoken.uid(256),
-    type: tokens.refresh.type
+    type: tokens.refresh.type,
   };
-  const options = { expiresIn: tokens.refresh.expiresIn};
+  const options = { expiresIn: tokens.refresh.expiresIn };
   return {
     id: payload.id,
-    token: jwt.sign(payload, secret, options)
-  }
+    token: jwt.sign(payload, secret, options),
+  };
+};
+const generateResetPassword = () => {
+  const payload = {
+    userId,
+    type: tokens.resetPassword.type,
+  };
+  const options = { expiresIn: tokens.resetPassword.expiresIn };
+  return jwt.sign(payload, secretReset, options);
 };
 const replaceDbRefreshToken = (tokenId, userId) =>
   TokenModel.findOneAndRemove({ userId })
@@ -31,4 +39,5 @@ module.exports = {
   generateAccessToken,
   generateRefreshToken,
   replaceDbRefreshToken,
+  generateResetPassword,
 };

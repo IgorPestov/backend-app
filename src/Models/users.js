@@ -9,15 +9,17 @@ const userShema = new mongoose.Schema({
   gender: String,
   avatar: Object,
   aboutYourself: String,
-  files:
-    [{  
-        name: String,
-        size: String,
-        mimetype: String,
-        filePath: String,
-        url: String,
-        urlImg: String,
-    }]
+  files: [
+    {
+      name: String,
+      size: String,
+      mimetype: String,
+      filePath: String,
+      url: String,
+      urlImg: String,
+    },
+  ],
+  resetLink: Object,
 });
 
 const userModel = mongoose.model("User", userShema);

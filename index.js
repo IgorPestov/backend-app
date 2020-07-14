@@ -6,8 +6,6 @@ const mongoose = require("mongoose");
 const router = require("./src/Routes/routes");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
-
-
 app.use(cors());
 app.use(fileUpload());
 require("dotenv").config();
@@ -26,6 +24,7 @@ mongoose
     console.log("Error with connecting to database");
   });
 app.use(bodyParser.json());
+app.set("view engine", "jade");
 app.use("/user", router);
 
 app.listen(PORT, () => {
