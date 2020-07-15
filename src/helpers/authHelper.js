@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
 const randtoken = require("rand-token");
-const { tokens, secret } = require("../config/configToken").jwt;
+const { tokens } = require("../config/configToken").jwt;
 const TokenModel = require("../Models/token");
+require("dotenv").config();
 
 const generateAccessToken = (userId) => {
   const payload = {
@@ -9,7 +10,7 @@ const generateAccessToken = (userId) => {
     type: tokens.access.type,
   };
   const options = { expiresIn: tokens.access.expiresIn };
-  return jwt.sign(payload, secret, options);
+  return jwt.sign(payload, process.env.secret, options);
 };
 const generateRefreshToken = () => {
   const payload = {
@@ -19,7 +20,7 @@ const generateRefreshToken = () => {
   const options = { expiresIn: tokens.refresh.expiresIn };
   return {
     id: payload.id,
-    token: jwt.sign(payload, secret, options),
+    token: jwt.sign(payload, process.env.secret, options),
   };
 };
 const generateResetPassword = () => {
@@ -28,7 +29,7 @@ const generateResetPassword = () => {
     type: tokens.resetPassword.type,
   };
   const options = { expiresIn: tokens.resetPassword.expiresIn };
-  return jwt.sign(payload, secretReset, options);
+  return jwt.sign(payload, process.env.secretReset, options);
 };
 const replaceDbRefreshToken = (tokenId, userId) =>
   TokenModel.findOneAndRemove({ userId })
