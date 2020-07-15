@@ -4,7 +4,6 @@ const authHelper = require("../helpers/authHelper");
 const TokenModel = require("../Models/token");
 const _ = require("lodash");
 require("dotenv").config();
-const { secret } = require("../config/configToken").jwt;
 const DOMAIN = "sandboxc82b49ab804749708b8431385f806b59.mailgun.org";
 const nodemailer = require("nodemailer");
 const mailGun = require("nodemailer-mailgun-transport");
@@ -21,7 +20,7 @@ exports.refreshTokens = (req, res) => {
   const { refreshToken } = req.body;
   let payload;
   try {
-    payload = jwt.verify(refreshToken, secret);
+    payload = jwt.verify(refreshToken, process.env.secret);
     if (payload.type !== "refresh") {
       res.status(400).json({ message: "Invalid token!" });
       return;
@@ -131,7 +130,7 @@ exports.resetPassword = async (req, res, next) => {
 exports.createNewPassword = async (req, res, next) => {
   const { resetLink, newPassword } = req.body;
   if (resetLink) {
-    jwt.verify(resetLink, secret, (err, decodedData) => {
+    jwt.verify(resetLink, process.env.secret, (err, decodedData) => {
       if (err) {
         return res
           .status(401)
