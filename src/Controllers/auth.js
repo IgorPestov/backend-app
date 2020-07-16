@@ -103,7 +103,7 @@ exports.resetPassword = async (req, res, next) => {
       subject: "Recovery account",
       html: `
     <h1>Please click on given link to reset your password</h1>
-    <a href="http://exceedteamfrontend.herokuapp.com/exceedbackend.herokuapp.com/createNewPassword/${resetPasswordToken}" > Click here password recovery </a> 
+    <a href="http://exceedteamfrontend.herokuapp.com/createNewPassword/${resetPasswordToken}" > Click here password recovery </a> 
     `,
     };
     return isUserFind.updateOne(
