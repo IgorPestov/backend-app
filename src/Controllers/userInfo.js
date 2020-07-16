@@ -70,7 +70,7 @@ exports.postUserAvatar = async (req, res, next) => {
         },
 
         async (err, result, response) => {
-          const url = result.url.slice(0) + "raw=1";
+          const url = result.url.slice(0, -4) + "raw=1";
           const path = result.path;
 
           const user = await userModel.findOneAndUpdate(
