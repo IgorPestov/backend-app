@@ -45,7 +45,7 @@ exports.postUnloadFile = async (req, res, next) => {
   }
 
   file.mv(
-    `/home/user/Desktop/backend/backend/upload/user_${id}/${file.name}`,
+    `./upload/user_${id}/${file.name}`,
     (err) => {
       if (err) {
         console.error(err);
@@ -63,7 +63,7 @@ exports.postUnloadFile = async (req, res, next) => {
       strict_conflict: false,
       symlink_info: true,
       readStream: fs.createReadStream(
-        `/home/user/Desktop/backend/backend/upload/user_${id}/${file.name}`
+        `./upload/user_${id}/${file.name}`
       ),
     },
     (err, result, response) => {

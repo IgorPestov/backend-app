@@ -37,7 +37,7 @@ exports.postUserAvatar = async (req, res, next) => {
   }
   fs.mkdirSync(`./upload/avatar_${id}`, { recursive: true });
   file.mv(
-    `/home/user/Desktop/backend/backend/upload/avatar_${id}/${file.name}`,
+    `./upload/avatar_${id}/${file.name}`,
     (err) => {
       if (err) {
         console.log(err);
@@ -55,7 +55,7 @@ exports.postUserAvatar = async (req, res, next) => {
       strict_conflict: false,
       symlink_info: true,
       readStream: fs.createReadStream(
-        `/home/user/Desktop/backend/backend/upload/avatar_${id}/${file.name}`
+        `./upload/avatar_${id}/${file.name}`
       ),
     },
     (err, result, response) => {
@@ -70,7 +70,7 @@ exports.postUserAvatar = async (req, res, next) => {
         },
 
         async (err, result, response) => {
-          const url = result.url.slice(0) + "raw=1";
+          const url = result.url.slice(0, -4) + "raw=1";
           const path = result.path;
 
           const user = await userModel.findOneAndUpdate(
