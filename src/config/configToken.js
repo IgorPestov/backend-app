@@ -1,7 +1,5 @@
 module.exports = {
   jwt: {
-    secret: "dev-jwt",
-    secretReset: "dev-jwt-reser",
     tokens: {
       access: {
         type: "access",
